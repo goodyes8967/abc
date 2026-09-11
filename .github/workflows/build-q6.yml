@@ -19,6 +19,7 @@ jobs:
           mkdir src
           unzip -q q6-ultra-auto-lock-source.zip -d src
           chmod +x src/zmk-openrgb-fork-openrgb/openrgb/build.sh
+          chmod +x src/zmk-openrgb-fork-openrgb/app/tools/prepend_header/linux-x86_64/prepend_header
 
       - name: Build firmware
         working-directory: src/zmk-openrgb-fork-openrgb
@@ -27,6 +28,6 @@ jobs:
       - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
-          name: q6-ultra-auto-lock-firmware-v2
+          name: q6-ultra-auto-lock-firmware-v3
           path: src/zmk-openrgb-fork-openrgb/openrgb/output/keychron_q6_ultra_ansi.bin
           if-no-files-found: error
