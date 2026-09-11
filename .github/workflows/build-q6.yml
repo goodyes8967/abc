@@ -1,0 +1,32 @@
+name: Build Q6 Ultra Auto Lock
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Unpack source
+        run: |
+          rm -rf src
+          mkdir src
+          unzip -q q6-ultra-auto-lock-source.zip -d src
+          chmod +x src/zmk-openrgb-fork-openrgb/openrgb/build.sh
+
+      - name: Build firmware
+        working-directory: src/zmk-openrgb-fork-openrgb
+        run: ./openrgb/build.sh keychron_q6_ultra_ansi
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: q6-ultra-auto-lock-firmware-v2
+          path: src/zmk-openrgb-fork-openrgb/openrgb/output/keychron_q6_ultra_ansi.bin
+          if-no-files-found: error
